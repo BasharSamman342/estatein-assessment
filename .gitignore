@@ -1,0 +1,41 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Secrets and local environment files
+.env
+.env.*
+!.env.example
+*.local
+**/.env
+**/.env.*
+!**/.env.example
+
+# Dependencies and build output
+node_modules/
+**/node_modules/
+vendor/
+**/vendor/
+dist/
+**/dist/
+coverage/
+
+# Laravel runtime / generated files
+backend/bootstrap/cache/*.php
+backend/storage/logs/*.log
+backend/storage/framework/cache/**
+backend/storage/framework/sessions/**
+backend/storage/framework/views/**
+backend/storage/app/public/**
+!backend/storage/app/public/.gitignore
+backend/public/storage
+backend/.phpunit.result.cache
+backend/.phpunit.cache/
+
+# Playwright and test artifacts
+frontend/test-results/
+frontend/playwright-report/
+frontend/coverage/

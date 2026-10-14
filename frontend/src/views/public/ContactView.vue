@@ -1,0 +1,17 @@
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+import InquiryForm from '../../components/property/InquiryForm.vue'
+
+const { t } = useI18n()
+</script>
+
+<template>
+  <div class="page-shell flex flex-col gap-10 py-[30px] font-sans text-ink md:gap-[60px] md:py-20">
+    <h1
+      class="text-[2rem] font-semibold leading-[1.2] md:text-[2.75rem] min-[1440px]:text-[3.75rem]"
+    >
+      {{ t('contact.title') }}
+    </h1>
+    <InquiryForm type="contact" :property-id="null" />
+  </div>
+</template>

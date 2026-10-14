@@ -1,0 +1,61 @@
+# Local Estatein stack: the Laravel API and its MySQL database.
+#
+#   docker compose up -d --build     build and start both services
+#   docker compose logs -f app       follow the API output
+#   docker compose down              stop them (add -v to drop the databases)
+#
+# MySQL root has an empty password (the XAMPP default the .env expects), so the
+# port is bound to 127.0.0.1 only. The API is published on http://localhost:8000.
+services:
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: estatein-api
+    container_name: estatein-api
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${APP_PORT:-8000}:8000"
+    # Everything from backend/.env (APP_KEY, CORS, Sanctum, admin seed, ...).
+    env_file:
+      - ./backend/.env
+    # Container-specific overrides: talk to the mysql service, serve on 8000.
+    environment:
+      APP_URL: http://localhost:${APP_PORT:-8000}
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: estatein
+      DB_USERNAME: root
+      DB_PASSWORD: ""
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      # Uploaded/seed images survive restarts and rebuilds.
+      - api-storage:/var/www/html/storage/app/public
+
+  mysql:
+    image: mysql:8.4
+    container_name: estatein-mysql
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${DB_PORT:-3306}:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: estatein
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./backend/docker/mysql/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  mysql-data:
+  api-storage:

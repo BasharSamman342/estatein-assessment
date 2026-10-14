@@ -1,0 +1,27 @@
+.git
+.gitignore
+.dockerignore
+Dockerfile
+
+# Local environment and secrets are injected at runtime.
+.env
+.env.*
+!.env.example
+
+# Host-installed dependencies and build artefacts.
+vendor
+node_modules
+.phpunit.result.cache
+
+# Runtime state that should start clean inside the image.
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/app/public/*
+bootstrap/cache/*.php
+public/storage
+public/hot
+
+.DS_Store
+Thumbs.db

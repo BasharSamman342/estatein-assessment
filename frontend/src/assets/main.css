@@ -1,0 +1,63 @@
+@import "tailwindcss";
+@import "@fontsource/urbanist/400.css";
+@import "@fontsource/urbanist/500.css";
+@import "@fontsource/urbanist/600.css";
+@import "@fontsource/urbanist/700.css";
+@import "@fontsource/ibm-plex-sans-arabic/400.css";
+@import "@fontsource/ibm-plex-sans-arabic/500.css";
+@import "@fontsource/ibm-plex-sans-arabic/600.css";
+@import "@fontsource/ibm-plex-sans-arabic/700.css";
+
+@theme {
+  --font-sans: "Urbanist", sans-serif;
+  --font-arabic: "IBM Plex Sans Arabic", "Urbanist", sans-serif;
+  --color-canvas: #141414;
+  --color-surface: #1a1a1a;
+  --color-line: #262626;
+  --color-ink: #ffffff;
+  --color-muted: #999999;
+  --color-accent: #703bf7;
+  --color-accent-ink: #ffffff;
+}
+
+html {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+html[dir="rtl"] {
+  font-family: var(--font-arabic);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-canvas);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@theme {
+  --spacing-page: 1rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --spacing-page: 5rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --spacing-page: 10.125rem;
+  }
+}
+
+.page-shell {
+  width: min(100% - (var(--spacing-page) * 2), 99.75rem);
+  margin-inline: auto;
+}
